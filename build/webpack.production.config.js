@@ -37,11 +37,6 @@ var productionConifg = {
     new DefinePlugin({
       PRODUCTION: true, // 现在是生产环境
     }),
-    new DllReferencePlugin({
-      context: ROOT_PATH,
-      manifest: path.resolve(ROOT_PATH, 'manifest.json'),
-      // name: "dll", // 不需要都可以了
-    }),
     // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小，该模块推荐使用
     new OccurrenceOrderPlugin(),
     new UglifyJsPlugin({
