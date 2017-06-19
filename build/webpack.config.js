@@ -5,9 +5,12 @@ var DefinePlugin = Webpack.DefinePlugin;
 var DllReferencePlugin = Webpack.DllReferencePlugin;
 
 // 纯属是装B用的 - 仪表盘
-// var Dashboard = require('webpack-dashboard');
-// var DashboardPlugin = require('webpack-dashboard/plugin');
-// var dashboard = new Dashboard();
+const ZB = false;
+if (ZB) {
+  var Dashboard = require('webpack-dashboard');
+  var DashboardPlugin = require('webpack-dashboard/plugin');
+  var dashboard = new Dashboard();
+}
 
 var CONFIGURATION = require('./config/webpack.common.config');
 
@@ -38,18 +41,16 @@ var webpackConfig = {
   resolve: CONFIGURATION.resolve,
   externals: CONFIGURATION.externals,
   module: CONFIGURATION.module,
-  plugins: [
+  plugins: ZB?([
     new DefinePlugin({
       PRODUCTION: false, // 现在是调试环境
     }),
-    new DllReferencePlugin({
-      context: ROOT_PATH,
-      manifest: path.resolve(ROOT_PATH, 'manifest.json'),
-      // name: "dll", // 不需要都可以了
+    new DashboardPlugin(dashboard.setData),
+  ]):([
+    new DefinePlugin({
+      PRODUCTION: false, // 现在是调试环境
     }),
-
-    // new DashboardPlugin(dashboard.setData),
-  ]
+  ])
 };
 
 webpackConfig.plugins = webpackConfig.plugins.concat(CONFIGURATION.plugins.slice(0));

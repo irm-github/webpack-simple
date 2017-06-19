@@ -43,7 +43,6 @@ module.exports = {
   },
 
   externals: {
-    // empty
     jQuery: 'window.jQuery',
     $: 'window.jQuery',
   },
@@ -137,21 +136,6 @@ module.exports = {
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: 'url-loader?limit=20000&name=dist/[name].[hash:8].[ext]'
-      },
-      {
-        test: /\.vue$/,
-        use: [
-          {
-            loader: 'vue-loader',
-            options: {
-              loaders: {
-                css: 'style-loader!css-loader!postcss-loader?sourceMap',
-                less: 'style-loader!css-loader!postcss-loader?sourceMap!less-loader',
-                sass: 'style-loader!css-loader!postcss-loader?sourceMap!sass-loader',
-              }
-            }
-          }
-        ]
       },
     ]
   },
