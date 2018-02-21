@@ -19,9 +19,9 @@ const COMPONENTS_PATH = path.resolve(ROOT_PATH, './src/components/');
 const IMG_PATH = path.resolve(ROOT_PATH, './src/assets/images/');
 const STY_PATH = path.resolve(ROOT_PATH, './src/assets/styles/');
 
-const extractCSS = new ExtractTextPlugin('[name]-1.[hash:8].css');
-const extractLESS = new ExtractTextPlugin('[name]-2.[hash:8].css');
-const extractSASS = new ExtractTextPlugin('[name]-3.[hash:8].css');
+const extractCSS = new ExtractTextPlugin('[name]_css.[hash:8].css');
+const extractLESS = new ExtractTextPlugin('[name]_less.[hash:8].css');
+const extractSASS = new ExtractTextPlugin('[name]_sass.[hash:8].css');
 
 module.exports = {
   PATH: {
@@ -79,9 +79,9 @@ module.exports = {
     }),
 
     // ExtractTextPlugin
-    // extractCSS,
+    extractCSS,
     extractLESS,
-    // extractSASS,
+    extractSASS,
   ],
 
   // 分析调试用的插件
