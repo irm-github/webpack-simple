@@ -4,9 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "server": "NODE_ENV=development && webpack-dev-server --host 0.0.0.0 --port 5004 --inline --hot --progress --config ./build/webpack.config.js",
-    "bundle": "NODE_ENV=development && webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js",
-    "build": "NODE_ENV=production && webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js"
+    "server": "cross-env NODE_ENV=development && webpack-dev-server --host 0.0.0.0 --port 5004 --inline --hot --progress --config ./build/webpack.config.js",
+    "bundle": "cross-env NODE_ENV=development && webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js",
+    "build": "cross-env NODE_ENV=production && webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js"
   },
   "keywords": [
     "webpack"
@@ -20,6 +20,7 @@
     "babel-loader": "^6.2.5",
     "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.16",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.25.0",
     "ejs-loader": "^0.3.0",
     "extract-text-webpack-plugin": "^2.1.0",
