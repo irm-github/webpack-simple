@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <link href="http://at.alicdn.com/t/font_3n1y2hvuscahsemi.css" rel="stylesheet">
     <script type="text/javascript">
-      if (0) { // 若是H5响应式页面，则可设置为true
+      (function(isEffective){
+        if (!isEffective) return ;
+
         const DRAFT_WIDTH = 750; //设计稿的设备像素宽，现为iPhone6的设备像素宽750px
         const SCALE = DRAFT_WIDTH / 100; //设置 100px = 1rem 的转换规则
         const dpr = window.devicePixelRatio;
@@ -36,7 +38,7 @@
         window.onresize = function(){
           changeRootFontsize();
         }
-      }
+      })(false);
     </script>
   </head>
   <body>
