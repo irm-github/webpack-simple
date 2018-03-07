@@ -13,10 +13,15 @@ $ npm install
 
 Start the project:
 ```bash
-$ npm run server
+$ npm start
 ```
 
 Build the project after development:
 ```bash
 $ npm run build
+```
+
+When you wanna analyze the project so as to improve the quality of the production code:
+```bash
+$ npm run analyze
 ```

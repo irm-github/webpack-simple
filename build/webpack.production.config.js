@@ -2,29 +2,28 @@ var path = require('path');
 var Webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractPlugin = require('extract-text-webpack-plugin');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var DefinePlugin = Webpack.DefinePlugin;
-var DllReferencePlugin = Webpack.DllReferencePlugin;
-var UglifyJsPlugin = Webpack.optimize.UglifyJsPlugin;
-var OccurrenceOrderPlugin = Webpack.optimize.OccurrenceOrderPlugin;
 
 var CONFIGURATION = require('./config/webpack.common.config');
 
 //定义指定文件夹的路径
-const ROOT_PATH = CONFIGURATION.PATH.ROOT_PATH;
-const SRC_PATH = CONFIGURATION.PATH.SRC_PATH;
-const DIST_PATH = CONFIGURATION.PATH.DIST_PATH;
+const ROOT_PATH = CONFIGURATION._PATH.ROOT_PATH;
+const SRC_PATH = CONFIGURATION._PATH.SRC_PATH;
+const DIST_PATH = CONFIGURATION._PATH.DIST_PATH;
 
 var productionConifg = {
+  // mode: 'production',
   entry: {
     'dist/main': path.resolve(SRC_PATH, 'main.js'),
   },
   output: {
     path: DIST_PATH,
     // 实际发布产品的时候很少使用到publicPath去指定CDN加速服务器资源
-    // publicPath: '/dist/',
+    // publicPath: '../dist/',
     // publicPath: 'http://localhost:5004/dist/',
-    filename: '[name].[hash:8].bundle.js',
-    chunkFilename: "[name].[chunkhash:8].js"
+    filename: '[name].bundle.[hash:8].js',
+    chunkFilename: "[name].chunk.[chunkhash:8].js"
   },
   resolve: CONFIGURATION.resolve,
   module: CONFIGURATION.module,
@@ -37,14 +36,18 @@ var productionConifg = {
     new DefinePlugin({
       PRODUCTION: true, // 现在是生产环境
     }),
-    // 根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小，该模块推荐使用
-    new OccurrenceOrderPlugin(),
     new UglifyJsPlugin({
+      uglifyOptions: {
         mangle:   true,
-        compress: {
-            warnings: false, // Suppress uglification warnings
-        },
+        warnings: true,
+        compress: true,
+        output: {
+          beautify: false
+        }
+      }
     }),
+    // 作用域提升，以加快代码在浏览器中的执行速度
+    new Webpack.optimize.ModuleConcatenationPlugin(),
   ],
 };
 

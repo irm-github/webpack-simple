@@ -40,9 +40,22 @@
         }
       })(false);
     </script>
+    <style>
+      .container {
+        padding: 20px !important;
+        text-align: center;
+      }
+      .container img {
+        width: 200px;
+        margin-top: 100px;
+      }
+    </style>
   </head>
   <body>
-    <h1> Hello World </h1>
+    <div class="container">
+      <h1 class="title"> Hello Webpack </h1>
+      <img src="<%= require('./src/assets/images/webpack.png') %>" alt="">
+    </div>
 
   <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   </body>

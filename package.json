@@ -1,45 +1,52 @@
 {
   "name": "webpack-simple",
-  "version": "0.0.2",
-  "description": "",
+  "version": "1.0.0",
+  "description": "A simple Webpack setup for quick prototyping.",
   "main": "main.js",
   "scripts": {
-    "server": "cross-env NODE_ENV=development && webpack-dev-server --host 0.0.0.0 --port 5004 --inline --hot --progress --config ./build/webpack.config.js",
-    "bundle": "cross-env NODE_ENV=development && webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js",
-    "build": "cross-env NODE_ENV=production && webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --host 0.0.0.0 --port 5004 --inline --hot --progress --config ./build/webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --mode production --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js",
+    "analyze": "cross-env NODE_ENV=development webpack --progress --profile --color --display-modules --display-chunks --config ./build/webpack.production.config.js"
   },
   "keywords": [
     "webpack"
   ],
   "author": "Cyber Hades",
   "license": "MIT",
+  "browserslist": [
+    "> 1%",
+    "last 3 versions",
+    "not ie <= 8"
+  ],
   "devDependencies": {
-    "autoprefixer": "^6.5.1",
-    "autoprefixer-loader": "^3.2.0",
-    "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.5",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.16",
     "cross-env": "^5.1.3",
-    "css-loader": "^0.25.0",
-    "ejs-loader": "^0.3.0",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.9.0",
-    "html-loader": "^0.4.4",
-    "html-webpack-plugin": "^2.22.0",
-    "json-loader": "^0.5.4",
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3",
-    "mockjs": "^1.0.1-beta3",
-    "node-sass": "^3.11.2",
-    "postcss-loader": "1.3.3",
-    "sass": "^0.5.0",
-    "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^2.3.2",
-    "webpack-bundle-analyzer": "^2.4.0",
+    "css-loader": "^0.28.10",
+    "ejs-loader": "^0.3.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.0.4",
+    "less": "^3.0.1",
+    "less-loader": "^4.0.6",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.1.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.2",
+    "uglifyjs-webpack-plugin": "^1.2.2",
+    "url-loader": "^0.6.2",
+    "webpack": "^4.1.0",
+    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-cli": "^2.0.10",
     "webpack-dashboard": "^0.3.0",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^3.1.0"
+  },
+  "dependencies": {
+    "moment": "^2.21.0"
   }
 }

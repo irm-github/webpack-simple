@@ -1,8 +1,9 @@
 {
   "presets": [
-    "env"
+    ["env", { "modules": false }]
   ],
   "plugins": [
-    
+    "syntax-dynamic-import",
+    "transform-runtime"
   ]
 }

@@ -4,7 +4,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var LoaderOptionsPlugin = Webpack.LoaderOptionsPlugin;
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const SRC_PATH = path.resolve(ROOT_PATH, './src');
@@ -24,7 +23,7 @@ const extractLESS = new ExtractTextPlugin('[name]_less.[hash:8].css');
 const extractSASS = new ExtractTextPlugin('[name]_sass.[hash:8].css');
 
 module.exports = {
-  PATH: {
+  _PATH: {
     ROOT_PATH: ROOT_PATH,
     SRC_PATH:  SRC_PATH,
     DIST_PATH: DIST_PATH,
@@ -35,10 +34,11 @@ module.exports = {
 
   resolve: {
     alias: {
-      'IMAGES': IMG_PATH,
-      'STYLES': STY_PATH,
-      'VIEWS': VIEWS_PATH,
-      'COMPONENTS': COMPONENTS_PATH,
+      '@SRC': SRC_PATH,
+      '@IMAGES': IMG_PATH,
+      '@STYLES': STY_PATH,
+      '@VIEWS': VIEWS_PATH,
+      '@COMPONENTS': COMPONENTS_PATH,
     }
   },
 
@@ -48,15 +48,6 @@ module.exports = {
   },
 
   plugins: [
-    /*
-    new Webpack.optimize.CommonsChunkPlugin({
-      // name: 'common', //将依赖合并到主文件
-      async: true, //不指定块名称的做法，让共同的依赖异步加载
-      children: true, // 寻找所有子模块的共同依赖
-      minChunks: 2, // 设置一个依赖被引用超过多少次就提取出来
-    }),
-    */
-
     // 生成页面插件
     new HtmlWebpackPlugin({
       title: 'webpack',
@@ -65,20 +56,6 @@ module.exports = {
       inject: true,
     }),
 
-    // 为loader统一提供plugin参数
-    new LoaderOptionsPlugin({
-      options: {
-        postcss: function(){
-          return [
-            require('autoprefixer')({
-              browsers: ['last 3 versions']
-            })
-          ]
-        },
-      }
-    }),
-
-    // ExtractTextPlugin
     extractCSS,
     extractLESS,
     extractSASS,
@@ -95,47 +72,53 @@ module.exports = {
     rules: [
       {
         test: /\.html$/,
-        // include: SRC_PATH,
         loader: 'html-loader'
       },
       {
         test: /\.ejs$/,
-        // include: SRC_PATH,
         use: 'ejs-loader'
-      },
-      {
-        test: /\.json$/,
-        use: 'json-loader'
       },
       {
         test: /\.js$/,
         include: SRC_PATH,
         use: 'babel-loader',
-        // 根目录下的.babelrc里可以设置
-        // query: {
-        //   presets: ['es2015'] //该参数是babel的plugin，可以支持最新的es6特性
-        // }
       },
       {
         test: /\.css$/,
         include: SRC_PATH,
-        // loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 5 versions'
-        use: extractCSS.extract(['css-loader', 'postcss-loader?sourceMap']),
+        use: extractCSS.extract(['css-loader', 'postcss-loader']),
+        // use: ['style-loader', 'css-loader', 'postcss-loader'],
+        // use: extractCSS.extract([
+        //   { loader: 'css-loader', options: { sourceMap: true } },
+        //   { loader: 'postcss-loader', options: { sourceMap: true } },
+        // ]),
       },
       {
         test: /\.less$/,
-        // include: SRC_PATH,
-        // loader: 'style-loader!css-loader!less-loader!autoprefixer-loader?browsers=last 5 versions'
-        use: extractLESS.extract(['css-loader', 'postcss-loader?sourceMap', 'less-loader']),
+        include: SRC_PATH,
+        use: extractLESS.extract(['css-loader', 'postcss-loader', 'less-loader']),
+        // use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+        // use: extractLESS.extract([
+        //   { loader: 'css-loader', options: { sourceMap: true } },
+        //   { loader: 'postcss-loader', options: { sourceMap: true } },
+        //   { loader: 'less-loader', options: { sourceMap: true } },
+        // ]),
       },
       {
         test: /\.(scss|sass)$/,
-        // loader: 'style-loader!css-loader!sass-loader!autoprefixer-loader?browsers=last 5 versions'
-        use: extractSASS.extract(['css-loader', 'postcss-loader?sourceMap', 'sass-loader']),
+        use: extractSASS.extract(['css-loader', 'postcss-loader', 'sass-loader']),
+        // use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        // use: extractLESS.extract([
+        //   { loader: 'css-loader', options: { sourceMap: true } },
+        //   { loader: 'postcss-loader', options: { sourceMap: true } },
+        //   { loader: 'sass-loader', options: { sourceMap: true } },
+        // ]),
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
-        use: 'url-loader?limit=20000&name=dist/[name].[hash:8].[ext]'
+        test: /\.(png|jpg|jpeg|gif|svg|ttf)$/,
+        use: [
+          { loader: 'url-loader', options: { limit: 2000, name: 'dist/[name].[hash:8].[ext]' } }
+        ],
       },
     ]
   },
