@@ -5,9 +5,11 @@ var DefinePlugin = Webpack.DefinePlugin;
 
 // 优化调试信息的UI界面
 const IS_PRETTIER_UI = false;
-var Dashboard = require('webpack-dashboard');
-var DashboardPlugin = require('webpack-dashboard/plugin');
-var dashboard = new Dashboard();
+if (IS_PRETTIER_UI) {
+  var Dashboard = require('webpack-dashboard');
+  var DashboardPlugin = require('webpack-dashboard/plugin');
+  var dashboard = new Dashboard();
+}
 
 var CONFIGURATION = require('./config/webpack.common.config');
 
@@ -48,7 +50,7 @@ var webpackConfig = {
       new Webpack.optimize.ModuleConcatenationPlugin(),
     ];
     if (IS_PRETTIER_UI) {
-      res.push(new DashboardPlugin(dashboard.setData))
+      ret.push(new DashboardPlugin(dashboard.setData))
     }
     return ret;
   })(),
