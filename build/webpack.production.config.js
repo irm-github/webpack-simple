@@ -27,6 +27,7 @@ var productionConifg = {
   },
   resolve: CONFIGURATION.resolve,
   module: CONFIGURATION.module,
+  optimization: CONFIGURATION.optimization,
   plugins: [
     new CleanPlugin([
       'dist',

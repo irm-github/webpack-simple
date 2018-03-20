@@ -2,6 +2,7 @@ var path = require('path');
 var Webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackExcludeEmptyAssetsPlugin = require('html-webpack-exclude-empty-assets-plugin');
 
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -47,6 +48,23 @@ module.exports = {
     $: 'window.jQuery',
   },
 
+  optimization: {
+    runtimeChunk: {
+      name: "dist/runtime"
+    },
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "dist/common",
+          chunks: "all",
+          minSize: 15000,
+        }
+      }
+    }
+  },
+
   plugins: [
     // 生成页面插件
     new HtmlWebpackPlugin({
@@ -55,10 +73,11 @@ module.exports = {
       template: 'index.html.js', //默认目录路径为根目录
       inject: true,
     }),
+    new HtmlWebpackExcludeEmptyAssetsPlugin(),
 
-    extractCSS,
+    // extractCSS,
     extractLESS,
-    extractSASS,
+    // extractSASS,
   ],
 
   // 分析调试用的插件
